@@ -33,6 +33,20 @@ This is a comprehensive Mini-Bank application designed to simulate core banking 
 *   **Financial Reports:** Generate reports on transactions, loans, and user activity (Admin/Manager).
 *   **Dashboard Analytics:** Visual summaries of key banking metrics.
 
+### Role-Based Dashboards And Functionality
+**User:**
+<img width="991" height="665" alt="Screenshot 2025-10-01 at 5 02 16 PM" src="https://github.com/user-attachments/assets/1ec37297-6243-49bc-92ee-b6b63106ebf1" />
+<img width="993" height="503" alt="Screenshot 2025-10-01 at 5 02 31 PM" src="https://github.com/user-attachments/assets/014c1b82-e52e-4308-a429-4874794ead0c" />
+
+**Manager:**
+<img width="1257" height="653" alt="Screenshot 2025-10-01 at 5 12 40 PM" src="https://github.com/user-attachments/assets/c5416426-e28f-465c-87bb-72069b2a9ce7" />
+<img width="1258" height="388" alt="Screenshot 2025-10-01 at 5 12 48 PM" src="https://github.com/user-attachments/assets/cadce8ec-108b-4597-a7b8-ad33abfe40d8" />
+
+**Admin:**
+<img width="1205" height="631" alt="Screenshot 2025-10-01 at 5 13 30 PM" src="https://github.com/user-attachments/assets/b8b77c11-99d7-41c0-83a9-be1a17b0286a" />
+<img width="1205" height="282" alt="Screenshot 2025-10-01 at 5 13 38 PM" src="https://github.com/user-attachments/assets/1af22ae9-d8ba-4fcb-b767-dfecc57c0be7" />
+
+
 ## Technologies Used
 
 *   **Backend:** PHP 8.x, Laravel Framework
