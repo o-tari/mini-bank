@@ -14,6 +14,7 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="bell" :href="route('notifications')" :current="request()->routeIs('notifications')" wire:navigate>{{ __('Notifications') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
@@ -30,12 +31,16 @@
             </flux:navlist>
 
             <!-- Desktop User Menu -->
-            <flux:dropdown class="hidden lg:block" position="bottom" align="start">
-                <flux:profile
-                    :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
-                    icon:trailing="chevrons-up-down"
-                />
+            <div class="hidden lg:flex lg:items-center lg:space-x-4">
+                <!-- Notifications -->
+                @livewire('notifications.notification-bell')
+
+                <flux:dropdown position="bottom" align="start">
+                    <flux:profile
+                        :name="auth()->user()->name"
+                        :initials="auth()->user()->initials()"
+                        icon:trailing="chevrons-up-down"
+                    />
 
                 <flux:menu class="w-[220px]">
                     <flux:menu.radio.group>
@@ -73,6 +78,7 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
+            </div>
         </flux:sidebar>
 
         <!-- Mobile User Menu -->
@@ -80,6 +86,11 @@
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <flux:spacer />
+
+            <!-- Notifications -->
+            <div class="mr-4">
+                @livewire('notifications.notification-bell')
+            </div>
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
