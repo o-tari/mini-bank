@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <!-- Quick Actions -->
+    {{-- <!-- Quick Actions -->
     <div class="mb-6 flex flex-wrap gap-4">
         <button onclick="showDepositModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +74,7 @@
             </svg>
             Export CSV
         </button>
-    </div>
+    </div> --}}
 
     <!-- Transactions Table -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md">
@@ -134,7 +134,7 @@
             </div>
         @endif
     </div>
-
+{{--
     <!-- Deposit Modal -->
     <div id="depositModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -190,7 +190,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script>
         function showDepositModal() {

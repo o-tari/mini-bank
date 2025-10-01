@@ -114,12 +114,7 @@
                             </svg>
                             Apply for Loan
                         </a>
-                        <button onclick="showDepositModal()" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                            </svg>
-                            Make Deposit
-                        </button>
+                        <livewire:deposits.deposit-form />
                         <a href="{{ route('transactions.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -131,82 +126,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Deposit Modal -->
-    <div id="depositModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Make Deposit</h3>
-                <form onsubmit="handleDeposit(event)">
-                    <div class="mb-4">
-                        <label for="depositAmount" class="block text-sm font-medium text-gray-700">Amount</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="number" id="depositAmount" step="0.01" min="0.01" required class="block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="closeDepositModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
-                            Cancel
-                        </button>
-                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md">
-                            Deposit
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function showDepositModal() {
-            document.getElementById('depositModal').classList.remove('hidden');
-        }
-
-        function closeDepositModal() {
-            document.getElementById('depositModal').classList.add('hidden');
-        }
-
-        function handleDeposit(event) {
-            event.preventDefault();
-            const amount = document.getElementById('depositAmount').value;
-
-            // Make AJAX request to deposit endpoint
-            fetch('{{ route("transactions.deposit") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    amount: amount,
-                    description: 'Account deposit'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Deposit successful!');
-                    location.reload();
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                alert('Error: ' + error.message);
-            });
-
-            closeDepositModal();
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const depositModal = document.getElementById('depositModal');
-            if (event.target === depositModal) {
-                closeDepositModal();
-            }
-        }
-    </script>
 </x-app-layout>

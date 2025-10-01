@@ -17,6 +17,8 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::post('/stripe/webhook', [App\Http\Controllers\StripeWebhookController::class, 'handleWebhook']);
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -36,36 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('transactions', function() {
         return view('transactions.index');
     })->name('transactions.index');
-    Route::post('transactions/deposit', function(\Illuminate\Http\Request $request) {
-        $request->validate([
-            'amount' => 'required|numeric|min:0.01',
-            'description' => 'nullable|string|max:255'
-        ]);
-
-        try {
-            $transactionService = app(\App\Services\TransactionService::class);
-            $transaction = $transactionService->deposit(auth()->user(), $request->amount, $request->description ?? 'Account deposit');
-
-            return redirect()->back()->with('success', 'Deposit successful!');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['amount' => $e->getMessage()]);
-        }
-    })->name('transactions.deposit');
-    Route::post('transactions/withdraw', function(\Illuminate\Http\Request $request) {
-        $request->validate([
-            'amount' => 'required|numeric|min:0.01|max:' . auth()->user()->balance,
-            'description' => 'nullable|string|max:255'
-        ]);
-
-        try {
-            $transactionService = app(\App\Services\TransactionService::class);
-            $transaction = $transactionService->withdraw(auth()->user(), $request->amount, $request->description ?? 'Account withdrawal');
-
-            return redirect()->back()->with('success', 'Withdrawal successful!');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['amount' => $e->getMessage()]);
-        }
-    })->name('transactions.withdraw');
+    Route::get('/deposit/success', [App\Http\Controllers\DepositController::class, 'success'])->name('deposit.success');
+    Route::get('/deposit/cancel', [App\Http\Controllers\DepositController::class, 'cancel'])->name('deposit.cancel');
 
     // Loan management routes
     Route::middleware(['role:manager|admin'])->group(function () {
@@ -76,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('loans/{loan}/disburse', [LoanController::class, 'disburse'])->name('loans.disburse');
         Route::patch('loans/{loan}/disbursement-date', [LoanController::class, 'updateDisbursementDate'])->name('loans.update-disbursement-date');
     });
+
+    Route::post('/deposit/initiate', [App\Http\Controllers\DepositController::class, 'initiate'])->name('api.deposit.initiate');
 
     // Admin routes
     Route::middleware(['role:admin|manager'])->group(function () {

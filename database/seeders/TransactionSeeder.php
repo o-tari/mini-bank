@@ -24,8 +24,8 @@ class TransactionSeeder extends Seeder
             Transaction::create([
                 'user_id' => $user->id,
                 'type' => 'deposit',
-                'amount' => $user->balance,
-                'balance_after' => $user->balance,
+                'amount' => 1000.00, // Initial deposit amount
+                'balance_after' => $user->balance + 1000.00, // Assuming initial balance is 0 before this deposit
                 'description' => 'Initial account deposit',
                 'status' => 'completed',
                 'processed_at' => now()->subDays(30),

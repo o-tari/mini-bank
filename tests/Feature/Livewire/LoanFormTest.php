@@ -2,6 +2,7 @@
 
 use App\Livewire\Loans\LoanForm;
 use App\Models\User;
+use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
 beforeEach(function () {

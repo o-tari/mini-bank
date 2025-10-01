@@ -12,44 +12,6 @@ beforeEach(function () {
     Role::firstOrCreate(['name' => 'admin']);
 });
 
-it('user can make a deposit', function () {
-    $user = User::factory()->create(['balance' => 1000]);
-
-    $this->actingAs($user)
-        ->post(route('transactions.deposit'), [
-            'amount' => 500,
-            'description' => 'Test deposit'
-        ])
-        ->assertRedirect();
-
-    $user->refresh();
-    expect($user->balance)->toBe('1500.00');
-});
-
-it('user can make a withdrawal', function () {
-    $user = User::factory()->create(['balance' => 1000]);
-
-    $this->actingAs($user)
-        ->post(route('transactions.withdraw'), [
-            'amount' => 300,
-            'description' => 'Test withdrawal'
-        ])
-        ->assertRedirect();
-
-    $user->refresh();
-    expect($user->balance)->toBe('700.00');
-});
-
-it('user cannot withdraw more than balance', function () {
-    $user = User::factory()->create(['balance' => 100]);
-
-    $this->actingAs($user)
-        ->post(route('transactions.withdraw'), [
-            'amount' => 200,
-            'description' => 'Test withdrawal'
-        ])
-        ->assertSessionHasErrors(['amount']);
-});
 
 it('user can view their transactions', function () {
     $user = User::factory()->create();

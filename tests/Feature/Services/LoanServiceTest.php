@@ -5,6 +5,8 @@ use App\Models\Loan;
 use App\Services\LoanService;
 use Tests\Feature\TestCase;
 
+
+
 it('creates a loan request with valid data', function () {
     $user = User::factory()->create();
     $service = app(LoanService::class);
@@ -40,7 +42,7 @@ it('calculates monthly payment correctly', function () {
 it('approves a loan with manager role', function () {
     // Create roles first
     \Spatie\Permission\Models\Role::create(['name' => 'manager']);
-    
+
     $manager = User::factory()->create()->assignRole('manager');
     $user = User::factory()->create();
     $service = app(LoanService::class);
@@ -77,7 +79,7 @@ it('throws exception when non-manager tries to approve loan', function () {
 it('disburses approved loan', function () {
     // Create roles first
     \Spatie\Permission\Models\Role::create(['name' => 'manager']);
-    
+
     $manager = User::factory()->create()->assignRole('manager');
     $user = User::factory()->create(['balance' => 1000]);
     $service = app(LoanService::class);

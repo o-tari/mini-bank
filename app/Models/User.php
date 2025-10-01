@@ -83,6 +83,14 @@ class User extends Authenticatable implements HasMedia
     }
 
     /**
+     * Get the user's deposits
+     */
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class);
+    }
+
+    /**
      * Get the user's audit logs
      */
     public function auditLogs()
